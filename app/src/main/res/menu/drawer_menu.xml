@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_drawer_domin_iyali"
+            android:title="@string/nav_domin_iyali"
+            android:icon="@drawable/ic_view_list_black_24dp"/>
+
+        <item
+            android:id="@+id/nav_drawer_domin_holewa"
+            android:title="@string/nav_domin_iyali"
+            android:icon="@drawable/ic_security_black_24dp"/>
+    </group>
+
+    <item  android:title="others">
+
+        <menu>
+            <item
+                android:id="@+id/nav_feed_back"
+                android:icon="@drawable/ic_feedback_black_24dp"
+                android:title="@string/nav_menu_feedback" />
+
+            <item
+                android:id="@+id/about"
+                android:title="@string/nav_drawer_about"
+                android:icon="@drawable/ic_info_black_24dp"/>
+
+            <item
+                android:id="@+id/nav_exit"
+                android:title="@string/nav_drawer_exit"
+                android:icon="@drawable/ic_exit_to_app_black_24dp"/>
+        </menu>
+    </item>
+
+</menu>
