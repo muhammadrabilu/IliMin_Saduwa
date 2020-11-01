@@ -1,8 +1,6 @@
 package com.ayyukana.iliminsaduwa.model
 
-import android.provider.MediaStore
-
-class YoutubeModel{
+class YoutubeModel {
     var title: String
     var thumbnail: String
     var videoID: String

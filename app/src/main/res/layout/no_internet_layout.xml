@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/noInternetLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/erroImage"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        android:background="@null"
+        android:elevation="4dp"
+        android:src="@drawable/ic_no_internet_foreground" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btnTryAgain"
+        android:layout_centerVertical="true"
+        android:padding="16dp"
+        android:text="Please check Your internet Connection and"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="15sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnTryAgain"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/erroImage"
+        android:layout_centerInParent="true"
+        android:background="@color/colorAccent"
+        android:text="Reload"
+        android:textColor="@color/colorPrimaryDark" />
+</RelativeLayout>

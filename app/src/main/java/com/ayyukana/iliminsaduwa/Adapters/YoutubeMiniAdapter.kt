@@ -9,13 +9,13 @@ import com.ayyukana.iliminsaduwa.R
 import com.ayyukana.iliminsaduwa.Respond.Respond
 import com.ayyukana.iliminsaduwa.Respond.Snippet
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.mini_layout.view.video_thumbnail
-import kotlinx.android.synthetic.main.mini_layout.view.video_title
-import okio.blackholeSink
+import kotlinx.android.synthetic.main.mini_layout.view.*
 
-class MiniAdapter(val respond: Respond,
-                  val mOnItemClickListener: OnItemClickListener) :
-    RecyclerView.Adapter<MiniAdapter.myViewHolder>() {
+class YoutubeMiniAdapter(
+    val respond: Respond,
+    val mOnItemClickListener: OnItemClickListener
+) :
+    RecyclerView.Adapter<YoutubeMiniAdapter.myViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myViewHolder {
@@ -28,22 +28,23 @@ class MiniAdapter(val respond: Respond,
         val video = respond.items[position]
 
 
-        holder.itemView.video_title.text = video.snippet.title
+        holder.itemView.mVideo_title.text = video.snippet.title
         holder.snippet = video.snippet
 
         Glide.with(holder.itemView)
             .load(Uri.parse(video.snippet.thumbnails.high.url))
             .centerCrop()
-            .into(holder.itemView.video_thumbnail)
+            .into(holder.itemView.mVideo_thumbnail)
     }
 
     override fun getItemCount(): Int {
         return respond.items.size
     }
 
-    inner class myViewHolder(itemView: View,
-                             val onItemClickListener: OnItemClickListener,
-                             var snippet: Snippet? = null
+    inner class myViewHolder(
+        itemView: View,
+        val onItemClickListener: OnItemClickListener,
+        var snippet: Snippet? = null
     ) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
 
@@ -56,7 +57,7 @@ class MiniAdapter(val respond: Respond,
         }
     }
 
-    interface OnItemClickListener{
+    interface OnItemClickListener {
         fun onClick(position: Int, snippet: Snippet?)
     }
 }

@@ -17,10 +17,14 @@ import com.ayyukana.iliminsaduwa.Respond.Snippet
 import com.ayyukana.iliminsaduwa.model.Constant
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.GsonBuilder
 import com.rommansabbir.networkx.NetworkX
 import com.rommansabbir.networkx.NetworkXObservingStrategy
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.nav_header.view.*
+import kotlinx.android.synthetic.main.no_internet_layout.*
 import kotlinx.android.synthetic.main.toolbar.*
 import okhttp3.*
 import java.io.IOException
@@ -34,11 +38,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         lateinit var mRecyclerView: RecyclerView
     }
 
+    lateinit var auth: FirebaseAuth
+    lateinit var firebaseFirestore: FirebaseFirestore
+    lateinit var userEmail: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         NetworkX.startObserving(this.application, NetworkXObservingStrategy.HIGH)
+        auth = FirebaseAuth.getInstance()
+        firebaseFirestore = FirebaseFirestore.getInstance()
+
+        if (auth.currentUser != null) {
+
+            val header = nav_view.getHeaderView(0)
+            userEmail = auth.currentUser!!.email.toString()
+
+            header.navHeaderUserEmail.text = userEmail
+        }
 
         setSupportActionBar(toolbar)
 
@@ -61,11 +79,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mRecyclerView.layoutManager = layoutManager
 
         NetworkX.isConnected().let {
-            when(it) {
-                true -> fetchJson()
-                else -> Toast.makeText(this, "No internet", Toast.LENGTH_SHORT).show()
+            when (it) {
+                true -> {
+                    fetchJson()
+                }
+
+                else -> {
+                    Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show()
+                    noInternetLayout.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                    shimmer_view_container.visibility = View.GONE
+                }
             }
 
+        }
+
+        btnTryAgain.setOnClickListener {
+            val intent = intent
+            finish()
+            startActivity(intent)
         }
 
     }
@@ -90,8 +122,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 val mainJson = gson.fromJson(body, Respond::class.java)
 
-                runOnUiThread{
-                    recyclerView.adapter = YoutubeAdapter( mainJson, this@MainActivity)
+                runOnUiThread {
+                    recyclerView.adapter = YoutubeAdapter(mainJson, this@MainActivity)
                     shimmer_view_container.visibility = View.GONE
                 }
                 Log.d(TAG, "mainJson: $mainJson  ")
@@ -103,7 +135,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.nav_drawer_domin_iyali -> startActivity(
                 Intent(
                     this,
@@ -115,9 +147,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onItemclick(position: Int, snippet: Snippet?) {
-            val intent = Intent(this, YoutubePlayerActivity::class.java)
-            intent.putExtra(Constant.SELECTED_ITEMS, snippet?.resourceId?.videoId)
-            startActivity(intent)
+        val intent = Intent(this, YoutubePlayerActivity::class.java)
+        intent.putExtra(Constant.SELECTED_ITEMS, snippet?.resourceId?.videoId)
+        startActivity(intent)
     }
 
 }

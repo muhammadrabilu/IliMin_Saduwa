@@ -1,15 +1,12 @@
 package com.ayyukana.iliminsaduwa.Activity
 
-import android.net.Network
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.ayyukana.iliminsaduwa.Activity.MainActivity.Companion.TAG
-import com.ayyukana.iliminsaduwa.Adapters.MiniAdapter
-import com.ayyukana.iliminsaduwa.Adapters.YoutubeAdapter
+import com.ayyukana.iliminsaduwa.Adapters.YoutubeMiniAdapter
 import com.ayyukana.iliminsaduwa.R
 import com.ayyukana.iliminsaduwa.Respond.Respond
 import com.ayyukana.iliminsaduwa.Respond.Snippet
@@ -20,26 +17,24 @@ import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayer.PlaybackEventListener
 import com.google.android.youtube.player.YouTubePlayer.PlayerStateChangeListener
 import com.google.gson.GsonBuilder
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_youtube_player.*
-import kotlinx.android.synthetic.main.activity_youtube_player.recyclerView
 import okhttp3.*
 import java.io.IOException
 
 
 class YoutubePlayerActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener,
-    MiniAdapter.OnItemClickListener {
+    YoutubeMiniAdapter.OnItemClickListener {
 
     private var player: YouTubePlayer? = null
-     var videoId: String? = null
+    var videoId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_youtube_player)
 
-        youtube_player.initialize(Constant.API_KEY, this);
+        youtube_player.initialize(Constant.API_KEY, this)
 
-         videoId = intent.getStringExtra(Constant.SELECTED_ITEMS)
+        videoId = intent.getStringExtra(Constant.SELECTED_ITEMS)
 
         val layoutManager = LinearLayoutManager(this)
 
@@ -76,16 +71,23 @@ class YoutubePlayerActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialized
     private val playerStateChangeListener: PlayerStateChangeListener =
         object : PlayerStateChangeListener {
             override fun onLoading() {
-                Toast.makeText(this@YoutubePlayerActivity, "Please wait your video is loading", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@YoutubePlayerActivity,
+                    "Please wait your video is loading",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+
             override fun onLoaded(s: String) {
                 player?.play()
             }
+
             override fun onAdStarted() {}
             override fun onVideoStarted() {}
             override fun onVideoEnded() {
 
             }
+
             override fun onError(errorReason: YouTubePlayer.ErrorReason) {
                 Log.d(TAG, "onError: $errorReason")
             }
@@ -119,7 +121,7 @@ class YoutubePlayerActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialized
                 val mainJson = gson.fromJson(body, Respond::class.java)
 
                 runOnUiThread {
-                    recyclerView.adapter = MiniAdapter(mainJson, this@YoutubePlayerActivity)
+                    recyclerView.adapter = YoutubeMiniAdapter(mainJson, this@YoutubePlayerActivity)
                     m_shimmer_view_container.visibility = View.GONE
                 }
 

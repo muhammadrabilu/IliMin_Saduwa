@@ -7,6 +7,13 @@
     <string name="nav_drawer_open">open</string>
     <string name="nav_drawer_close">close</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="confirm_password_hint">confirm password</string>
+    <string name="btn_register">Register</string>
+    <string name="btn_already_register">Already Registered? Login</string>
+    <string name="btn_new_user">New user? Register</string>
+    <string name="btn_login">Login</string>
+    <string name="hint_full_name">Full Name</string>
 </resources>

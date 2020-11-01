@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="176dp"
     android:background="@color/colorPrimaryDark"
     android:gravity="bottom"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <RelativeLayout
@@ -21,20 +20,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#fafafa"
-            android:layout_toEndOf="@+id/app_icon"
             android:layout_centerInParent="true"
-            android:text="@string/app_name" />
+            android:layout_toEndOf="@+id/app_icon"
+            android:text="@string/app_name"
+            android:textColor="#fafafa"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/userEmail"
+            android:id="@+id/navHeaderUserEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/app_icon"
-            android:textColor="#fafafa"
-            android:text="info@illiminsaduwa.com"/>
+            android:text="info@illiminsaduwa.com"
+            android:textColor="#fafafa" />
 
     </RelativeLayout>
 
